@@ -121,3 +121,31 @@ CREATE TABLE songs (
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
+
+
+CREATE TABLE playlists (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    datetime_created DATETIME NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_playlists_user_id
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+);
+
+
+CREATE TABLE playlists_songs (
+    id INT NOT NULL AUTO_INCREMENT,
+    playlist_id INT NOT NULL,
+    song_id INT NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_playlists_songs_playlist_id
+        FOREIGN KEY (playlist_id) REFERENCES playlists(id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_playlists_songs_song_id
+        FOREIGN KEY (song_id) REFERENCES songs(id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+);
