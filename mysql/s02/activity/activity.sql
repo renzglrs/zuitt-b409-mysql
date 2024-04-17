@@ -33,7 +33,7 @@ CREATE TABLE post_likes (
     CONSTRAINT fk_post_likes_post_id
         FOREIGN KEY (post_id) REFERENCES posts(id)
         ON UPDATE CASCADE
-        ON DELETE RESTRICT
+        ON DELETE RESTRICT,
     CONSTRAINT fk_post_likes_user_id
         FOREIGN KEY (user_id) REFERENCES users(id)
         ON UPDATE CASCADE
@@ -49,7 +49,7 @@ CREATE TABLE post_comments (
     CONSTRAINT fk_post_comments_post_id
         FOREIGN KEY (post_id) REFERENCES posts(id)
         ON UPDATE CASCADE
-        ON DELETE RESTRICT
+        ON DELETE RESTRICT,
     CONSTRAINT fk_post_comments_user_id
         FOREIGN KEY (user_id) REFERENCES users(id)
         ON UPDATE CASCADE
