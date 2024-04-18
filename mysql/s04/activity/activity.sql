@@ -18,7 +18,7 @@ FROM albums
 SELECT *
 FROM artists
     JOIN albums ON artists.id = albums.artist_id
-    WHERE name LIKE "%a%";
+    WHERE album_title LIKE "%a%";
 
 --     e. Sort the albums in Z-A order. (Show only the first 4 records.)
 SELECT * 
