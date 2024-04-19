@@ -595,7 +595,9 @@ FROM customers;
 
 -- 1. Return the customer names of customers whose customer names don't have 'a' in them
 -- Solution Here:
-
+SELECT customerName
+FROM customers
+WHERE customerName NOT LIKE "%a%";
 
 -- Expected Output:
 -- +--------------------------------+
@@ -631,7 +633,10 @@ FROM customers;
 
 -- 2. Return the last names and first names of employees being supervised by "Anthony Bow"
 -- Solution Here:
-
+SELECT emp.lastName, emp.firstName
+FROM employees AS emp
+    JOIN employees AS supervisor ON emp.reportsTo = supervisor.employeeNumber
+    WHERE supervisor.firstName = "Anthony" AND supervisor.lastName = "Bow";
 
 -- Expected Output:
 -- +-----------+-----------+
@@ -647,6 +652,10 @@ FROM customers;
 
 -- 3. Return the product name and MSRP of the product with the highest MSRP
 -- Solution Here:
+SELECT productName, MSRP
+FROM products
+ORDER BY MSRP DESC
+LIMIT 1;
 
 
 -- Expected Output:
@@ -658,6 +667,12 @@ FROM customers;
 
 -- 4. Return the employees' first names, employees' last names, customers' names, and offices' countries of transactions whose customers and offices are in the same country
 -- Solution Here:
+SELECT DISTINCT emp.firstName, emp.lastName, cust.customerName, off.country
+FROM orders AS ord
+    JOIN customers AS cust ON ord.customerNumber = cust.customerNumber
+    JOIN employees AS emp ON cust.salesRepEmployeeNumber = emp.employeeNumber
+    JOIN offices AS off ON emp.officeCode = off.officeCode
+    WHERE cust.country = off.country;
 
 
 -- Expected Output:
@@ -728,7 +743,11 @@ FROM customers;
 
 -- 5. Return the number of products per product line
 -- Solution Here:
-
+SELECT COUNT(p.productName), pl.productLine
+FROM products AS p
+    JOIN productlines AS pl ON p.productLine = pl.productLine
+    GROUP BY pl.productLine
+    ;
 
 -- Expected Output:
 -- +--------------------+------------------+
@@ -745,6 +764,11 @@ FROM customers;
 
 -- 6. Return the number of customers served by every employee
 -- Solution Here:
+SELECT COUNT(cust.customerName), emp.firstName, emp.lastName
+FROM employees AS emp
+    JOIN customers AS cust ON emp.employeeNumber = cust.salesRepEmployeeNumber
+    GROUP BY CONCAT(emp.firstName, " ", emp.lastName)
+    ;
 
 
 -- Expected Output:
@@ -770,7 +794,11 @@ FROM customers;
 
 -- 7. Show the customer's name with the highest credit limit.
 -- Solution Here:
-
+SELECT customerName, creditLimit
+FROM customers
+ORDER BY creditLimit DESC
+LIMIT 1
+;
 
 -- Expected Output:
 -- +------------------------+-------------+
